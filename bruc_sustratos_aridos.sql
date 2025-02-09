@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-02-2025 a las 01:17:09
+-- Tiempo de generación: 09-02-2025 a las 22:04:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.1.25
 
@@ -50,7 +50,24 @@ INSERT INTO `articulos` (`id`, `nombre`) VALUES
 (22, 'Mulching de Pino'),
 (23, 'Bala Turba 250L'),
 (24, 'Arena Lavada de rio'),
-(25, 'Arena de Sílice');
+(25, 'Arena de Sílice'),
+(26, 'Saulo Cribado'),
+(27, 'Bolo Mármol 06/12'),
+(28, 'Bolo Mármol 12/24'),
+(29, 'Bolo Mármol 24/40'),
+(30, 'Bolo Mármol 40/60'),
+(31, 'Bolo Mármol 60/90'),
+(32, 'Triturado Mármol o Grava 7/15'),
+(33, 'Triturado Mármol o Grava 12/20'),
+(34, 'Triturado Mármol o Grava 10/14'),
+(35, 'Triturado Mármol o Grava 18/25'),
+(36, 'Triturado Mármol o Grava 6/9'),
+(37, 'Canto Rodado o Grava Río 5/12'),
+(38, 'Canto Rodado o Grava Río 12/20'),
+(39, 'Canto Rodado o Grava Río 25/40'),
+(40, 'Grava Granito Gris Ojo de perdiz 3/7'),
+(41, 'Grava Granito Gris Drenaje 8/10'),
+(42, 'Grava Granito Gris Drenaje 18/25');
 
 -- --------------------------------------------------------
 
@@ -87,7 +104,24 @@ INSERT INTO `producto_presentaciones` (`producto_id`, `saco_litros`, `peso_saco_
 (22, NULL, NULL, 800.00, 300.00, 150.00, NULL, 380.00),
 (23, 250, 50.00, 800.00, NULL, NULL, NULL, 200.00),
 (24, NULL, NULL, 700.00, 1000.00, 400.00, 20, 1500.00),
-(25, NULL, NULL, 700.00, 1000.00, 500.00, 25, 1450.00);
+(25, NULL, NULL, 700.00, 1000.00, 500.00, 25, 1450.00),
+(26, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1400.00),
+(27, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(28, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(29, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(30, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1300.00),
+(31, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1300.00),
+(32, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(33, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(34, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(35, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(36, NULL, NULL, 700.00, NULL, NULL, 20, 1500.00),
+(37, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(38, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(39, NULL, NULL, 700.00, 1000.00, 500.00, 20, 1500.00),
+(40, NULL, NULL, 700.00, 1100.00, NULL, NULL, 1500.00),
+(41, NULL, NULL, 700.00, 1100.00, NULL, 20, 1500.00),
+(42, NULL, NULL, 700.00, 1000.00, 500.00, NULL, 1500.00);
 
 --
 -- Índices para tablas volcadas
@@ -113,7 +147,7 @@ ALTER TABLE `producto_presentaciones`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

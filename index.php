@@ -58,6 +58,15 @@ function calculateRequirements($presentations, $areaM2, $grosorCm) {
     $mediasSacas = 0;
     $kgSinCubrir = 0;
 
+    $results = [
+        'sacos_litros' => 0,
+        'sacos_kg' => 0,
+        'sacas_big' => 0,
+        'medias_sacas' => 0,
+        'kg_sin_cubrir' => 0 // Se inicializa en 0
+    ];
+
+
     // Calcular sacos en litros si existen
     if (!empty($presentations['saco_litros']) && !empty($presentations['peso_saco_litros'])) {
         $sacosLitros = ceil(($volumeM3 * 1000) / $presentations['saco_litros']);
@@ -131,32 +140,34 @@ function main() {
         echo "No hay productos disponibles.\n";
         return;
     }
+    // Capturar el producto seleccionado (si se envió el formulario)
+    $productIdSeleccionado = $_POST['product'] ?? null;
 
     // Mostrar formulario
     echo '<form method="POST">';
     echo '<label for="product">Selecciona un producto:</label>';
     echo '<select name="product" id="product">';
     foreach ($products as $product) {
-        echo '<option value="' . htmlspecialchars($product['id']) . '">' . htmlspecialchars($product['nombre']) . '</option>';
+        $selected = ($productIdSeleccionado == $product['id']) ? 'selected' : '';
+        echo '<option value="' . htmlspecialchars($product['id']) . '" ' . $selected . '>' . htmlspecialchars($product['nombre']) . '</option>';
     }
     echo '</select><br>';
 
     echo '<label for="areaM2">Área en m²:</label>';
-    echo '<input type="number" step="0.01" name="areaM2" id="areaM2" required><br>';
+    echo '<input type="number" step="0.01" name="areaM2" id="areaM2" required value="' . ($_POST['areaM2'] ?? '') . '"><br>';
 
     echo '<label for="grosorCm">Espesor en cm:</label>';
-    echo '<input type="number" step="0.01" name="grosorCm" id="grosorCm" required><br>';
+    echo '<input type="number" step="0.01" name="grosorCm" id="grosorCm" required value="' . ($_POST['grosorCm'] ?? '') . '"><br>';
 
     echo '<button type="submit">Calcular</button>';
     echo '</form>';
 
     // Procesar formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $productId = $_POST['product'];
         $areaM2 = (float)$_POST['areaM2'];
         $grosorCm = (float)$_POST['grosorCm'];
 
-        $presentations = getProductPresentations($pdo, $productId);
+        $presentations = getProductPresentations($pdo, $productIdSeleccionado);
         if (!$presentations) {
             echo "Error al obtener las presentaciones del producto.\n";
             return;
@@ -170,7 +181,7 @@ function main() {
         echo "<p>✅ Peso total requerido: " . number_format($results['peso_total_kg'], 2) . " kg</p>";
 
         if (isset($results['sacos_litros'])) {
-            echo "<p>✅ Número de sacos de " . $presentations['saco_litros'] . " litros: " . $results['sacos_litros'] . "</p>";
+            echo "<p>✅ Número de sacos de " . $presentations['saco_litros'] . " litros " . $results['sacos_litros'] . "</p>";
         }
         if (isset($results['sacas_big'])) {
             echo "<p>✅ Número de Bigs grandes (peso " . $presentations['peso_saca_big'] . " kg): " . $results['sacas_big'] . "</p>";
@@ -181,7 +192,9 @@ function main() {
         if (isset($results['sacos_kg'])) {
             echo "<p>✅ Número de sacos de " . $presentations['saco_kg'] . " kg: " . $results['sacos_kg'] . "</p>";
         }
-        if ($results['kg_sin_cubrir'] > 0) {
+        if(!isset($results['kg_sin_cubrir']) || $results['kg_sin_cubrir'] <= 0) {
+            echo "<p>✅ Todo el peso está cubierto por los envases.</p>";
+        } else {
             $pesoReferencia = !empty($presentations['peso_mediasaca_big']) ? $presentations['peso_mediasaca_big'] : 
                               (!empty($presentations['peso_saca_big']) ? $presentations['peso_saca_big'] : "N/A");
             
@@ -190,7 +203,7 @@ function main() {
             } else {
                 echo "<p>⚠️ Kg sin cubrir por sacas grandes o medias sacas (peso " . $pesoReferencia . " kg): " . $results['kg_sin_cubrir'] . " kg</p>";
             }
-        }  
+        } 
        
     }
 }
